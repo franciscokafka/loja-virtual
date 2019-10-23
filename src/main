@@ -1,0 +1,138 @@
+#include "Produto.hpp"
+#include "Cliente.hpp"
+#include "Funcionario.hpp"
+#include "Pessoa.hpp"
+#include "Audio_Book.hpp"
+#include "E_Book.hpp"
+#include <bits/stdc++.h>    
+#include "Carrinho.hpp"
+#define TAMANHO 14
+using namespace std;
+
+
+
+void Logo_da_loja(){
+    char elemento[10]={"VICTORIA"};
+    int recuo = 0;
+    printf("\n\n\t");
+    for (int linha = 1; linha <= TAMANHO; linha++) {  
+        for (int coluna = 1; coluna <= TAMANHO; coluna++) {     
+            if (coluna == linha || (coluna == TAMANHO - recuo))
+                printf("%s", elemento);
+            else
+                printf(" ");
+            if (coluna == TAMANHO) {
+                recuo++;
+                printf("\n\t");
+            }
+        }
+    } 
+   printf("\n\n");
+}
+    
+void Tela_de_entrada(){
+    cout<<"\tSEJA BEM VINDO A VICTORIA X "<<endl<<endl;
+    cout<<"\t     PRODULTOS DIGITAIS"<<endl<<endl;
+    cout<<" Precione a tecla ENTER para continua!"<<endl;
+    cin.get();
+    system("clear");
+}
+
+void Menu_de_Escolhas(){
+    cout<<endl<<endl;
+    cout<<"\t\t 1 --- Modo Venda"<<endl<<endl;
+    cout<<"\t\t 2 --- Modo Rencomendacao"<<endl<<endl;
+    cout<<"\t\t 3 --- Modo Estoque"<<endl<<endl;
+    cout<<"\t\t 0 --- Sair"<<endl<<endl;
+    cout<<"\n\n"<<endl;
+}
+
+int main(){
+    vector<Cliente * >lista_cliente;
+    vector<E_Book * >lista_e_book;
+    vector<Audio_Book * >lista_audio_book;
+    vector<string *>lista_carrinho;
+    Cliente cliente_geral; 
+    Produto produto_geral;   
+    E_Book e_book_geral;
+    Audio_Book audio_book_geral;
+    char ler_vazio; 
+    int tipo_produto =0; 
+    int opcao=1;
+    int tamanho_vector_cliente =0,tamanho_vector_e_book=0,tamanho_vector_audio_book=0; 
+    cliente_geral.Lendo_arquivo_cliente(lista_cliente);
+    e_book_geral.Lendo_arquivo_e_book(lista_e_book);
+    audio_book_geral.Lendo_arquivo_audio_book(lista_audio_book);
+    
+    tamanho_vector_cliente=lista_cliente.size();
+    tamanho_vector_audio_book=lista_audio_book.size();
+    tamanho_vector_e_book=lista_e_book.size();
+    Logo_da_loja();
+    Tela_de_entrada();   
+
+
+    while(1){
+        system("clear");
+        Menu_de_Escolhas();  
+        cout<<"\t\t\tEscolha uma Opcao"<<endl;
+        cin>>opcao;
+        system("clear");
+        switch(opcao)
+        {
+        
+            case 1:
+ 
+                cliente_geral.Cadastra_cliente(lista_cliente);
+                cout<<"Escrever o nome do Produlto de acordo com a lista:"<<endl;
+                e_book_geral.imprimi_Produtos(lista_e_book);
+                audio_book_geral.imprimi_Produtos_audio(lista_audio_book);
+                break;
+            case 2:
+              
+                
+                break;
+            case 3:
+                cout<<"Seja bem vindo ao modo estoque"<<endl;
+                cout<<"Escolha uma das opcoes"<<endl;
+                cout<<"1- Cadastra produto tipo E-book."<<endl<<endl;
+                cout<<"2- Cadastra produto tipo Audio Book."<<endl<<endl;
+                cout<<"3-  Gerar lista de Produtos"<<endl<<endl;
+                
+                cin>>tipo_produto;
+                if(tipo_produto == 1){
+                system("clear");   
+                e_book_geral.Cadastra_e_book(lista_e_book);
+                    
+                }
+                else if(tipo_produto == 2){ 
+                system("clear");    
+                audio_book_geral.Cadastra_audio_book(lista_audio_book);
+                }
+                else if(tipo_produto == 3){
+                system("clear");    
+                e_book_geral.imprimi_Produtos(lista_e_book);
+                audio_book_geral.imprimi_Produtos_audio(lista_audio_book);
+                }
+                cout<<"Digite tecla 1, logo depois enter! para continua"<<endl;
+                cin>>ler_vazio;
+                
+                break;
+            case 0:
+                Logo_da_loja();
+                printf("\tObrigado pela Preferencia!!!\n");
+                break;
+            default :
+                printf("Valor invalido!\n");
+        }
+        if(opcao==0)break;
+        
+    } 
+    cliente_geral.escrever_arquivo_Cliente(lista_cliente,tamanho_vector_cliente);
+    e_book_geral.escrever_arquivo_ebook(lista_e_book,tamanho_vector_e_book); 
+    audio_book_geral.escrever_arquivo_audio_book(lista_audio_book,tamanho_vector_audio_book);
+    lista_cliente.clear();
+    lista_audio_book.clear();
+    lista_e_book.clear();
+     
+ return 0;
+}
